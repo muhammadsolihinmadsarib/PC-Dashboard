@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PC Deployment Reports</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <h1>PC Deployment Reports</h1>
+    </header>
+
+    <div class="chart-container card">
+        <h2>PCs Replaced vs Not Replaced</h2>
+        <canvas id="statusChart" height="200"></canvas>
+    </div>
+
+    <div class="chart-container card">
+        <h2>PCs by Plant</h2>
+        <canvas id="plantChart" height="200"></canvas>
+    </div>
+
+    <div class="chart-container card">
+        <h2>PCs by Department</h2>
+        <canvas id="deptChart" height="200"></canvas>
+    </div>
+
+</div>
+
+<script src="reports.js"></script>
+</body>
+</html>
