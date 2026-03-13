@@ -35,3 +35,14 @@ pc-dashboard/
 ├── sidebar.js        # Collapsible sidebar navigation generation
 ├── style.css         # Global stylesheet, UI components, and modal styling
 └── LICENSE           # MIT License file
+
+
+## Installation & Setup
+
+### 1. Local Deployment
+
+Clone this repository:
+
+```bash
+git clone https://github.com/username/pc-dashboard.git
+cd pc-dashboard
