@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Deployment Dashboard</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.replace('login.html');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h1>PC Deployment Dashboard</h1>
+                <p id="welcome-user" style="font-size: 14px; color: #666;"></p>
+            </div>
+        </header>
+
+        <div class="controls card">
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search by name, serial, or IP...">
+                <button class="search-btn">Search</button>
+            </div>
+        </div>
+
+        <div class="add-container card">
+            <button class="add-btn">+ Add New PC Record</button>
+        </div>
+
+        <div class="table-container card">
+            <table id="pcTable">
+                <thead>
+                    <tr>
+                        <th>Plant</th>
+                        <th>Department</th>
+                        <th>Old PC Name</th>
+                        <th>Old Serial</th>
+                        <th>New PC Name</th>
+                        <th>New Serial</th>
+                        <th>IPv4 Address</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+    </div>
+<script src="sidebar.js"></script>
+</body>
+</html>

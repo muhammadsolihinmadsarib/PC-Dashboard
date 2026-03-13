@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Logs - PC Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.replace('login.html');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="logs.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h1>Activity Logs</h1>
+            </div>
+        </header>
+
+        <div class="table-container card">
+            <table id="logsTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                	<th>Time</th>
+                	<th>Employee ID</th>
+                	<th>Action</th>
+                	<th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="logsBody">
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 40px; color: #999;">
+                            Loading system logs...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script src="sidebar.js"></script>
+</html>

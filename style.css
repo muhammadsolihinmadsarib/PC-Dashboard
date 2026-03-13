@@ -1,0 +1,365 @@
+/* Reset & base */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9fafb;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Header */
+header h1 {
+    font-weight: 600;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #111;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    flex-direction: column; /* Stack search wrapper vertically */
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.search-wrapper {
+    display: flex;
+    gap: 10px;
+    width: 100%; /* Take full width */
+}
+
+.search-wrapper input[type="text"] {
+    flex: 1; /* Input takes remaining space */
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.search-wrapper .search-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-wrapper .search-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Add PC button container */
+.add-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.add-container .add-btn {
+    padding: 10px 20px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Take full width of search wrapper */
+    max-width: calc(100% - 0px); /* Align with search-wrapper width */
+}
+
+.add-container .add-btn:hover {
+    background-color: #059669;
+}
+
+/* Table */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th, td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+    text-transform: capitalize;
+    position: sticky;
+    top: 0;
+}
+
+tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Status badges */
+.status {
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.status.replaced {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status.not-replaced {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Login page styles */
+.login-container {
+    max-width: 400px;
+    width: 90%; /* Make it responsive for smaller screens */
+    margin: 80px auto;
+    padding: 30px 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    box-sizing: border-box; /* Ensure padding included in width */
+}
+
+.login-container h1 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #111;
+}
+
+/* Fix input overflow */
+.login-container input {
+    width: 100%;
+    max-width: 100%; /* Prevent overflow */
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box; /* Include padding/border in width */
+    overflow: hidden; /* hide overflow if text is too long */
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px 0;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
+
+#error-msg {
+    color: #e11d48;
+    margin-top: 10px;
+    font-size: 14px;
+    word-wrap: break-word; /* long error messages wrap inside box */
+}
+
+.switch-page {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #6b7280; /* gray text */
+}
+
+.switch-page a {
+    color: #3b82f6; /* blue link */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch-page a:hover {
+    text-decoration: underline;
+}
+
+/* Popup overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Rectangular popup content */
+.popup-content {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    max-width: 600px;       /* wider for 2 columns */
+    width: 90%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 12px 20px;         /* row gap 12px, column gap 20px */
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.popup-content h2 {
+    grid-column: 1 / -1;    /* span both columns */
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.popup-content label {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+}
+
+/* Inputs & Selects */
+.popup-content input,
+.popup-content select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+/* Buttons at bottom spanning 2 columns */
+.popup-buttons {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.popup-buttons button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+#save-btn, #add-save-btn { background-color: #10b981; color: #fff; }
+#save-btn:hover, #add-save-btn:hover { background-color: #059669; }
+
+#close-btn, #add-close-btn { background-color: #ef4444; color: #fff; }
+#close-btn:hover, #add-close-btn:hover { background-color: #b91c1c; }
+
+/* Chart container styling */
+.chart-container {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.chart-container h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Position the popup relative so we can put the X in the corner */
+.popup-content {
+    position: relative; /* Essential for the X position */
+    padding-top: 40px;  /* Give space for the X */
+}
+
+/* The X symbol style */
+.close-x {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.close-x:hover {
+    color: #ef4444; /* Turns red when you hover, like Windows */
+}
+
+/* Adjust button layout since we removed Close/Cancel */
+.popup-buttons {
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+th.sort-asc::after {
+    content: " ↑";
+    font-size: 12px;
+}
+
+th.sort-desc::after {
+    content: " ↓";
+    font-size: 12px;
+}
+
+th:hover {
+    background-color: #e5e7eb;
+}
+
+/* Sidebar Styling */
+#sidebar {
+    width: 260px;
+    background: #2c3e50;
+    color: white;
+    position: fixed;
+    top: 0; left: 0; height: 100%;
+    z-index: 999;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+}
+#sidebar.collapsed { transform: translateX(-100%); }
+.logo-area { padding: 60px 20px 20px; text-align: center; background: rgba(0,0,0,0.2); }
+#sidebar-user-display { color: #27ae60; font-size: 0.8rem; margin-top: 5px; }
+nav a { padding: 15px 25px; display: block; color: #bdc3c7; text-decoration: none; border-left: 4px solid transparent; }
+nav a:hover { background: #34495e; color: white; border-left: 4px solid #27ae60; }
+
+/* Toggle Button */
+.menu-toggle {
+    position: fixed; top: 15px; left: 15px; z-index: 1000;
+    background: #2c3e50; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;
+}
+.bar { display: block; width: 20px; height: 2px; margin: 4px auto; background: white; }

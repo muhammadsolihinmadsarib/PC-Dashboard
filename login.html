@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - PC Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-container card">
+    <h1>PC Dashboard Login</h1>
+
+    <input type="employee-id" id="employee-id" placeholder="Employee ID">
+    <input type="password" id="password" placeholder="Password">
+
+    <button id="login-btn" class="login-btn">Login</button>
+    <p id="error-msg"></p>
+<p class="switch-page">
+    Don't have an account? 
+    <a href="register.html">Register here</a>
+</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="login.js"></script>
+
+</body>
+</html>
