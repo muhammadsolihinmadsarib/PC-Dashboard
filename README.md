@@ -7,33 +7,6 @@ The **PC Deployment Dashboard** is a web application designed to manage the regi
 
 Key user flows include staff registration, login/logout, managing PC deployment records, and viewing activity logs. All activities are tracked and logged for audit purposes. The application relies on Supabase as its backend for data storage and authentication.
 
----
-
-## Architecture Overview
-
-```mermaid
-flowchart TD
-    subgraph PresentationLayer [Presentation Layer]
-        LoginPage[login.html]
-        RegisterPage[register.html]
-        DashboardPage[index.html]
-        LogsPage[logs.html]
-        Sidebar[sidebar.js]
-    end
-    subgraph BusinessLogic [Business Layer]
-        AuthLogic[login.js, register.js]
-        PCLogic[script.js]
-        LogsLogic[logs.js]
-    end
-    subgraph DataAccessLayer [Data Access Layer]
-        SupabaseClient[Supabase JS SDK]
-    end
-    PresentationLayer --> BusinessLogic
-    BusinessLogic --> DataAccessLayer
-    DataAccessLayer -->|API| SupabaseDB[Supabase Database]
-```
-
----
 
 ## Component Structure
 
@@ -61,7 +34,7 @@ flowchart TD
 #### **Sidebar** (`sidebar.js`)
 - Provides navigation links to dashboard and logs, displays logged-in user's ID, and includes an accessible logout button.
 
----
+
 
 ### 2. Business Layer
 
@@ -78,7 +51,7 @@ flowchart TD
 - Fetches and displays activity logs for auditing.
 - Handles periodic refreshing of activity data.
 
----
+
 
 ### 3. Data Access Layer
 
@@ -88,7 +61,7 @@ flowchart TD
   - `pcs` (PC deployment records)
   - `activity_logs` (activity tracking)
 
----
+
 
 ### 4. Data Models
 
@@ -123,7 +96,7 @@ flowchart TD
 | details       | string    | Action details                     |
 | created_at    | timestamp | Date and time of the action        |
 
----
+
 
 ## Feature Flows
 
@@ -206,7 +179,7 @@ sequenceDiagram
     BL-->>V: Render logs table
 ```
 
----
+
 
 ## State Management
 
@@ -215,21 +188,21 @@ sequenceDiagram
 - **Error**: Error messages are shown on failed operations (e.g., login errors, failed record updates).
 - **Empty**: If no records exist, a placeholder row communicates the empty state.
 
----
+
 
 ## Integration Points
 
 - All business logic interacts directly with Supabase via the JS SDK.
 - The sidebar is embedded in every main page for navigation and logout.
 
----
+
 
 ## Analytics & Tracking
 
 - Every significant user action (LOGIN, LOGOUT, REGISTER, CREATE, UPDATE, DELETE) is logged to the `activity_logs` table.
 - Each log entry captures the user (employee_id), type of action, and details.
 
----
+
 
 ## Key Classes Reference
 
@@ -242,7 +215,7 @@ sequenceDiagram
 | sidebar.js          | sidebar.js        | Renders the sidebar and manages navigation/logout                     |
 | SupabaseClient      | All JS files      | Data access for users, pcs, activity_logs via Supabase                |
 
----
+
 
 ## Error Handling
 
@@ -259,21 +232,21 @@ function showError(text) {
 }
 ```
 
----
+
 
 ## Caching Strategy
 
 - No local data caching is implemented; all data is fetched in real time from Supabase.
 - Activity logs auto-refresh every 30 seconds to keep data up to date.
 
----
+
 
 ## Dependencies
 
 - [Supabase JS SDK](https://supabase.com/) (`@supabase/supabase-js@2`)
 - No other third-party libraries are used.
 
----
+
 
 ## API Integration
 
@@ -350,7 +323,7 @@ function showError(text) {
 }
 ```
 
----
+
 
 ### PC Records: Get All
 
@@ -380,7 +353,7 @@ function showError(text) {
 }
 ```
 
----
+
 
 ### PC Records: Create
 
@@ -414,7 +387,7 @@ function showError(text) {
 }
 ```
 
----
+
 
 ### PC Records: Update
 
@@ -450,7 +423,7 @@ function showError(text) {
 }
 ```
 
----
+
 
 ### PC Records: Delete
 
@@ -486,7 +459,7 @@ function showError(text) {
 }
 ```
 
----
+
 
 ### Activity Logs: Fetch All
 
@@ -516,7 +489,7 @@ function showError(text) {
 }
 ```
 
----
+
 
 ## UI States
 
@@ -525,7 +498,7 @@ function showError(text) {
 - **Popups:** Used for editing and adding records, overlaid on dashboard.
 - **Logs Table:** Shows loading, no records, and auto-refreshes.
 
----
+
 
 ## Testing Considerations
 
@@ -536,7 +509,7 @@ function showError(text) {
 - Check activity logs auto-refresh and correct action recording.
 - Test logout from both main dashboard and sidebar.
 
----
+
 
 ```card
 {
@@ -559,6 +532,6 @@ function showError(text) {
 }
 ```
 
----
+
 
 **End of Documentation**
