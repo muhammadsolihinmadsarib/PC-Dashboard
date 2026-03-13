@@ -20,6 +20,18 @@ const table = document.getElementById('pcTable');
 const tbody = table ? table.tBodies[0] : null;
 const searchInput = document.querySelector('.search-wrapper input');
 const addBtn = document.querySelector('.add-btn');
+const logoutBtn = document.getElementById('logout-btn');
+
+// ================= LOGGING HELPER =================
+async function logActivity(action, details) {
+    try {
+        await supabaseClient.from('activity_logs').insert([
+            { employee_id: currentEmployee, action: action, details: details }
+        ]);
+    } catch (err) {
+        console.error("Logging failed:", err);
+    }
+}
 
 // ================= LOAD DATA =================
 async function loadPCs() {
@@ -58,12 +70,10 @@ function addRowToTable(pc) {
 // ================= TABLE SORTING LOGIC =================
 if (table) {
     table.querySelectorAll('th').forEach((header, index) => {
-        header.style.cursor = 'pointer'; // Make it look clickable
+        header.style.cursor = 'pointer';
         header.addEventListener('click', () => {
             const rows = Array.from(tbody.rows);
             const isAscending = header.classList.contains('sort-asc');
-            
-            // Toggle sort direction
             table.querySelectorAll('th').forEach(th => th.classList.remove('sort-asc', 'sort-desc'));
             header.classList.toggle('sort-asc', !isAscending);
             header.classList.toggle('sort-desc', isAscending);
@@ -71,13 +81,10 @@ if (table) {
             rows.sort((a, b) => {
                 const cellA = a.cells[index].textContent.toLowerCase();
                 const cellB = b.cells[index].textContent.toLowerCase();
-
                 if (cellA < cellB) return isAscending ? 1 : -1;
                 if (cellA > cellB) return isAscending ? -1 : 1;
                 return 0;
             });
-
-            // Re-append rows in new order
             rows.forEach(row => tbody.appendChild(row));
         });
     });
@@ -106,6 +113,7 @@ if (tbody) {
 function openEditPopup(row) {
   const id = row.dataset.id;
   const cells = row.cells;
+  const pcNameForLog = cells[4].textContent || cells[2].textContent;
   const popup = document.createElement('div');
   popup.className = 'popup-overlay';
 
@@ -138,22 +146,45 @@ function openEditPopup(row) {
   popup.querySelector('#x-close').onclick = () => popup.remove();
 
   popup.querySelector('#delete-btn').onclick = async () => {
-    if (confirm(`Are you sure?`)) {
+    if (confirm(`Are you sure you want to delete this record?`)) {
       const { error } = await supabaseClient.from('pcs').delete().eq('id', id);
-      if (!error) { popup.remove(); loadPCs(); }
+      if (!error) { 
+        await logActivity("DELETE", `Deleted PC: ${pcNameForLog}`);
+        popup.remove(); 
+        loadPCs(); 
+      }
     }
   };
 
   popup.querySelector('#save-btn').onclick = async () => {
     const inputs = popup.querySelectorAll('input, select');
-    const { error } = await supabaseClient.from('pcs').update({
-        plant: inputs[0].value, department: inputs[1].value,
-        old_pc_name: inputs[2].value, old_serial: inputs[3].value,
-        new_pc_name: inputs[4].value, new_serial: inputs[5].value,
-        ipv4: inputs[6].value, status: inputs[7].value
-    }).eq('id', id);
-    if (!error) { popup.remove(); loadPCs(); }
-  };
+    const newName = inputs[4].value; // Capture the new PC name for the log
+
+    const { error } = await supabaseClient
+      .from('pcs')
+      .update({
+        plant: inputs[0].value,
+        department: inputs[1].value,
+        old_pc_name: inputs[2].value,
+        old_serial: inputs[3].value,
+        new_pc_name: newName,
+        new_serial: inputs[5].value,
+        ipv4: inputs[6].value,
+        status: inputs[7].value
+      })
+      .eq('id', id);
+
+    if (error) {
+      alert("Update failed: " + error.message);
+      return;
+    }
+
+    // ADD THIS LINE TO FIX THE LOGGING
+    await logActivity("UPDATE", `Updated PC: ${newName} (Status: ${inputs[7].value})`);
+
+    popup.remove();
+    loadPCs();
+};
 }
 
 // ================= ADD POPUP =================
@@ -183,22 +214,43 @@ if (addBtn) {
       document.body.appendChild(popup);
       popup.querySelector('#x-close-add').onclick = () => popup.remove();
       popup.querySelector('#add-save-btn').onclick = async () => {
-        const inputs = popup.querySelectorAll('input, select');
-        const { error } = await supabaseClient.from('pcs').insert({
-          plant: inputs[0].value, department: inputs[1].value,
-          old_pc_name: inputs[2].value, old_serial: inputs[3].value,
-          new_pc_name: inputs[4].value, new_serial: inputs[5].value,
-          ipv4: inputs[6].value, status: inputs[7].value
-        });
-        if (!error) { popup.remove(); loadPCs(); }
-      };
+    const inputs = popup.querySelectorAll('input, select');
+    const pcName = inputs[4].value; // Capture the name of the new PC
+
+    const { error } = await supabaseClient.from('pcs').insert({
+      plant: inputs[0].value,
+      department: inputs[1].value,
+      old_pc_name: inputs[2].value,
+      old_serial: inputs[3].value,
+      new_pc_name: pcName,
+      new_serial: inputs[5].value,
+      ipv4: inputs[6].value,
+      status: inputs[7].value
+    });
+
+    if (error) {
+      alert("Add failed: " + error.message);
+      return;
+    }
+
+    // ADD THIS LINE TO FIX THE LOGGING
+    await logActivity("CREATE", `Added new PC ${pcName}`);
+
+    popup.remove();
+    loadPCs();
+};
     });
 }
 
 // ================= LOGOUT =================
-const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
-    logoutBtn.onclick = () => { localStorage.clear(); window.location.replace('login.html'); };
+    logoutBtn.onclick = async () => {
+        // Log activity before clearing storage
+        await logActivity("LOGOUT", "User signed out from session");
+        localStorage.clear();
+        window.location.replace('login.html');
+    };
 }
 
+// ================= INITIAL LOAD =================
 loadPCs();
